@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Theme tokens. Light is the default; `.dark` on <html> switches everything.
+--------------------------------------------------------------------------- */
+:root {
+  --surface: 253 250 243; /* cream page background */
+  --card: 255 255 255;
+  --line: 227 237 230; /* soft sage hairline */
+  --ink: 34 55 43; /* deep sage text */
+  --muted: 110 126 117;
+  --shadow-color: 34 55 43;
+}
+
+.dark {
+  --surface: 18 26 22;
+  --card: 27 37 32;
+  --line: 51 67 58;
+  --ink: 235 242 237;
+  --muted: 156 172 163;
+  --shadow-color: 0 0 0;
+}
+
+@layer base {
+  * {
+    @apply border-line;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-surface text-ink font-sans antialiased;
+    background-image: radial-gradient(60% 55% at 12% 0%, rgb(139 104 199 / 0.1) 0%, transparent 60%),
+      radial-gradient(55% 50% at 88% 4%, rgb(117 159 131 / 0.14) 0%, transparent 62%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-tight;
+  }
+
+  ::selection {
+    @apply bg-lavender-200 text-sage-900;
+  }
+
+  /* Visible, consistent keyboard focus everywhere. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-lavender-400 ring-offset-2 ring-offset-surface;
+  }
+
+  /* Respect users who prefer less motion. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-sage-200 dark:bg-sage-700;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section {
+    @apply py-14 sm:py-20;
+  }
+
+  .card {
+    @apply rounded-3xl border border-line bg-card shadow-soft;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lift;
+  }
+
+  .glass {
+    @apply border border-white/40 bg-white/70 backdrop-blur-xl dark:border-white/10 dark:bg-white/5;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold
+      transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-sage-600 text-white shadow-soft hover:bg-sage-700 active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply btn bg-lavender-500 text-white shadow-soft hover:bg-lavender-600 active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply btn border border-sage-300 bg-transparent text-sage-700 hover:bg-sage-50
+      dark:border-sage-600 dark:text-sage-100 dark:hover:bg-sage-800/60;
+  }
+
+  .btn-ghost {
+    @apply btn bg-transparent text-ink hover:bg-sage-50 dark:hover:bg-sage-800/60;
+  }
+
+  .btn-sm {
+    @apply px-3.5 py-2 text-xs;
+  }
+
+  .btn-lg {
+    @apply px-7 py-3.5 text-base;
+  }
+
+  .input {
+    @apply w-full rounded-2xl border border-line bg-card px-4 py-3 text-sm text-ink
+      placeholder:text-muted/70 focus:border-sage-400 focus:outline-none focus:ring-2 focus:ring-sage-300/50;
+  }
+
+  .label {
+    @apply mb-1.5 block text-sm font-semibold text-ink;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-line bg-card px-3 py-1 text-xs font-medium text-muted;
+  }
+
+  .chip-active {
+    @apply border-sage-500 bg-sage-600 text-white;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-lavender-600 dark:text-lavender-300;
+  }
+
+  .link {
+    @apply font-semibold text-sage-700 underline decoration-sage-300 underline-offset-4
+      transition hover:text-sage-900 dark:text-sage-200 dark:hover:text-white;
+  }
+
+  .skeleton {
+    @apply relative overflow-hidden rounded-2xl bg-sage-100 dark:bg-sage-800;
+  }
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/50 to-transparent dark:via-white/10;
+  }
+
+  .prose-yoga p {
+    @apply mb-3 leading-relaxed text-muted;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
